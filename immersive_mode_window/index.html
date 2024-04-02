@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' ; script-src 'self';  img-src 'self' blob: data:;">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css"/>
+</head>
+<body>
+    <div class="main">
+        <div class="first_phase">
+            <div>开启沉浸式模式</div>
+        </div>
+        <div class="second_phase">
+            <div class="choose_mode_1">工作</div>
+            <div class="choose_mode_2">学习</div>
+            <div class="choose_mode_3">编程</div>
+            <div class="choose_mode_4">创作</div>
+            <div class="choose_mode_5">自定义</div>
+            <div class="choose_mode_bg"></div>
+        </div>
+        <div class="third_phase">
+            <div>自定义</div>
+            <input type="text" class="third_phase_input"/>
+            <div>模式</div>
+        </div>
+        <div class="fourth_phase">
+            <div class="mode_name">工作</div>
+            <div>模式已开启</div>
+        </div>
+        <div class="fifth_phase">
+            <div class="fifth_phase_text">
+                <div>沉浸式</div>
+                <div class="mode_name_2">工作</div>
+                <div>中...</div>
+            </div>
+            <div class="fifth_phase_control">
+                <div class="hide">enter 关闭</div>
+                <div class="end">Esc 结束</div>
+            </div>
+        </div>
+        <div class="sixth_phase">
+            <div>本次</div>
+            <div class="mode_name_3">工作</div>
+            <div>时长</div>
+            <div class="time">2小时26分</div>
+        </div>
+    </div>
+    <script src="./renderer.js"></script>
+</body>
+</html>

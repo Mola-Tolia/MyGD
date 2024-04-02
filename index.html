@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' ; script-src 'self';  img-src 'self' blob: data:;">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css"/>
+</head>
+<body>
+    <div id="main">
+        <div class="retract">
+            <div class="stripe"></div>
+            <div class="stripe"></div>
+        </div>
+        <div class="toolbar">
+            <div class="divide_rough">粗分</div>
+            <div class="divide_detailed">细分</div>
+            <div class="wallpaper_btn">壁纸</div>
+            <div class="order">任务</div>
+            <div class="sync">同步</div>
+            <div class="downSync">下载文件</div>
+            <div class="release_all">释放全部</div>
+            <img class="toolbarIcon" src="./resources/images/list.png" />
+        </div>
+    </div>
+    <div class="wallpaper">
+        <div class="wp_main">
+            <div class="wp_main_left">
+                <div class="wp_control">
+                    <button class="wp_back">返回</button>
+                    <button class="wp_upload">上传</button>
+                    <button class="wp_save">设置</button>
+                </div>
+                <div class="wp_display">
+                    <div class="wp_display_img">
+                        <p class="null_tip">请上传图片</p>
+                        <img class="wp_display_cur_img" alt="" />
+                        <div class="wp_display_cur_img_2"></div>
+                    </div>
+                </div>
+                <div class="wp_choice">
+                    <img class="scrollToLeft" src="./resources/images/left.png" />
+                    <div class="wp_choice_box"></div>
+                    <img class="scrollToRight" src="./resources/images/right.png" />
+                </div>
+            </div>
+            <div class="wp_main_right">
+                <button class="wp_mode" mode="1">适应</button>
+                <button class="wp_mode" mode="2">填充</button>
+                <button class="wp_mode" mode="3">拉伸</button>
+                <button class="wp_mode" mode="4">居中</button>
+                <button class="wp_mode" mode="5">平铺</button>
+                <div class="button_box">
+                    <div class="button_inbox" >
+                        <button class="wp_mode_bechoosed">适应</button>
+                        <button class="wp_mode_bechoosed">填充</button>
+                        <button class="wp_mode_bechoosed">拉伸</button>
+                        <button class="wp_mode_bechoosed">居中</button>
+                        <button class="wp_mode_bechoosed">平铺</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="order_page">
+        <div class="op_main">
+            <div class="op_top">
+                <button class="op_back">返回</button>
+                <button class="op_create">创建新任务</button>
+            </div>
+            <div class="op_body">
+                <div class="order_item order_item_template">
+                    <div class="opshow_main_info">
+                        <div class="opshow_title">题目</div>
+                        <div class="opshow_detail">描述描述描述描述描述描述描述描述描述描述描述描述描述描述</div>
+                        <div class="opshow_files">
+                            <div class="opshow_file">  
+                                <img class="opshow_file_icon" src="./resources/images/directory.png" alt="" />
+                                <p class="opshow_file_name">fileName</p>
+                            </div>
+                        </div>
+                        <div class="opshow_schedule">
+                            <div class="schedule_strip">
+                                <div class="schedule_strip_s"></div>
+                                <p class="schedule_strip_t">1/2</p>
+                            </div>
+                        </div>
+                        <div class="opshow_control">
+                            <button class="opshow_cancel">删除</button>
+                            <button class="opshow_alter">修改</button>
+                            <button class="opshow_complete">完成</button>
+                            <button class="opshow_subtask">展开</button>
+                        </div>
+                    </div>
+                    <div class="single_files_node">
+                        <div class="single_files_node_inbox">
+                            <div class="single_file_node">
+                                <img class="single_file_node_icon" src="./resources/images/directory.png" />
+                                <div class="single_file_node_name">fileName</div>
+                                <img class="single_file_node_done" src="./resources/images/done.png" />
+                                <img class="single_file_node_not single_file_node_display" src="./resources/images/not.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="op_create_box">
+            <div class="op_create_inbox">
+                <div class="opc_title">
+                    <input class="opc_title_text" type="text" placeholder="请输入题目"/>
+                </div>
+                <div class="opc_detail">
+                    <textarea class="opc_detail_text" placeholder="任务描述" spellcheck="false"></textarea>
+                </div>
+                <div class="opc_files"></div>
+                <div class="opc_time">
+                    <div class="opc_order_deadline">
+                        <p>截止日期：</p>
+                        <select class="sel_year"></select>
+                        <p>年</p>
+                        <select class="sel_month"></select>
+                        <p>月</p>
+                        <select class="sel_day"></select>
+                        <p>日</p>
+                        <select class="sel_hour"></select>
+                        <p>时</p>
+                        <select class="sel_minute"></select>
+                        <p>分</p>
+                    </div>
+                    <div class="opc_order_remind">
+                        <p>提醒频繁度</p>
+                        <input class="opc_file_remind_times" id="opc_order_remind_times" checked type="radio" name="opc_order_remind_control" />
+                        <label for="opc_order_remind_times">每次</label>
+                        <div class="opc_order_remind_times_control">
+                            <input class="ofrtc2 ofrtc_year" id="ofrtc2_year" type="radio" name="ofrtc2_" />
+                            <label for="ofrtc2_year" class="opc_file_remind_times_year">
+                                <div class="time_text">年</div>
+                                <div class="time_set">
+                                    <div>每年</div>
+                                    <select class="times_year_month"></select>
+                                    <div>月</div>
+                                    <select class="times_year_day"></select>
+                                    <div>日</div>
+                                    <select class="times_year_hour"></select>
+                                    <div>时</div>
+                                    <select class="times_year_minute"></select>
+                                    <div>分</div>
+                                </div>
+                            </label>
+                            <input class="ofrtc2 ofrtc_month" id="ofrtc2_month" type="radio" name="ofrtc2_" />
+                            <label for="ofrtc2_month" class="opc_file_remind_times_month">
+                                <div class="time_text">月</div>
+                                <div class="time_set">
+                                    <div>每月</div>
+                                    <select class="times_month_day"></select>
+                                    <div>号</div>
+                                    <select class="times_month_hour"></select>
+                                    <div>时</div>
+                                    <select class="times_month_minute"></select>
+                                    <div>分</div>
+                                </div>
+                            </label>
+                            <input class="ofrtc2 ofrtc_week" id="ofrtc2_week" type="radio" name="ofrtc2_" />
+                            <label for="ofrtc2_week" class="opc_file_remind_times_week">
+                                <div class="time_text">周</div>
+                                <div class="time_set">
+                                    <div>每周 星期</div>
+                                    <select class="times_week_week"></select>
+                                    <div>&nbsp;&nbsp;</div>
+                                    <select class="times_week_hour"></select>
+                                    <div>时</div>
+                                    <select class="times_week_minute"></select>
+                                    <div>分</div>
+                                </div>
+                            </label>
+                            <input class="ofrtc2 ofrtc_day" id="ofrtc2_day" checked type="radio" name="ofrtc2_" />
+                            <label for="ofrtc2_day" class="opc_file_remind_times_day">
+                                <div class="time_text">日</div>
+                                <div class="time_set">
+                                    <div>每天</div>
+                                    <select class="times_day_hour"></select>
+                                    <div>时</div>
+                                    <select class="times_day_minute"></select>
+                                    <div>分</div>
+                                </div>
+                            </label>
+                            <input class="ofrtc2 ofrtc_hour" id="ofrtc2_hour" type="radio" name="ofrtc2_" />
+                            <label for="ofrtc2_hour" class="opc_file_remind_times_hour">
+                                <div class="time_text">时</div>
+                                <div class="time_set">
+                                    <div>每</div>
+                                    <input class="input_number order_times_hour" type="number" max="99" min="1" value="1"/>
+                                    <div>小时</div>
+                                </div>
+                            </label>
+                            <input class="ofrtc2 ofrtc_minute" id="ofrtc2_minute" type="radio" name="ofrtc2_" />
+                            <label for="ofrtc2_minute" class="opc_file_remind_times_minute">
+                                <div class="time_text">分</div>
+                                <div class="time_set">
+                                    <div>每</div>
+                                    <input class="input_number order_times_minute" type="number" max="99" min="1" value="1"/>
+                                    <div>分钟</div>
+                                </div>
+                            </label>
+                        </div>
+                        <input class="opc_file_remind_custom" id="opc_order_remind_custom" type="radio" name="opc_order_remind_control" />
+                        <label for="opc_order_remind_custom">自定义</label>
+                        <div class="opc_file_remind_custom_control">
+                            <div class="add_opc_file_remind_custom">添加</div>
+                            <div class="opc_file_remind_custom_list opc_order_remind_custom_list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="opc_control">
+                    <button class="opc_control_uploadFile">上传任务文件</button>
+                    <button class="opc_control_cancel">取消</button>
+                    <button class="opc_control_create">创建</button>
+                </div>
+                <div class="opc_choose_file">
+                    <div class="opc_choose_file_retract">丅</div>
+                    <div class="opc_choose_file_area_box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sync_btn">
+        <div class="close_sync_box">返回</div>
+        <div class="confirm_sync_box">确定</div>
+        <div class="sync_box"></div>
+    </div>
+    <div class="downSync_box">
+        <div class="downSync_inbox"></div>
+        <div class="downSync_box_cancel">取消</div>
+        <div class="downSync_box_download">下载</div>
+    </div>
+    <script src="./renderer.js"></script>
+</body>
+</html>

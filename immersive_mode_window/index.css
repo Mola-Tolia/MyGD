@@ -1,0 +1,179 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+}
+:root{
+    --first_phase-display:none;
+    --second_phase-display:none;
+    --third_phase-display:none;
+    --fourth_phase-display:none;
+    --fifth_phase-display:none;
+    --sixth_phase-display:none;
+    --choose_mode_bg-left:0;
+}
+.main{
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    width: calc(100vw - 1px);
+    height: calc(100vh - 1px);
+    background-color: rgba(255, 255, 255, 0.4);
+    box-sizing: border-box;
+    border-radius: 5px;
+    transition: all .3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.first_phase:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.first_phase{
+    display: var(--first_phase-display);
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all .3s;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 10px;
+    font-size: 30px;
+}
+.second_phase{
+    position: relative;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: var(--second_phase-display);
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+}
+.second_phase > div:not(:last-of-type){
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.choose_mode_bg{
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    top: 0;
+    left: var(--choose_mode_bg-left);
+    background-color: rgb(0, 0, 0);
+    z-index: -1;
+    transition: all .3s;
+}
+.third_phase{
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: var(--third_phase-display);
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    letter-spacing: 5px;
+}
+.third_phase_input{
+    outline: none;
+    border: none;
+    width: 100px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0);
+    border-bottom: 2px solid white;
+    margin: 0 10px 0 5px;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+.fourth_phase{
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: var(--fourth_phase-display);
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    letter-spacing: 5px;
+}
+.fifth_phase{
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: var(--fifth_phase-display);
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    letter-spacing: 5px;
+}
+.fifth_phase_text{
+    width: calc(100% - 80px);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mode_name_2{
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding-left: 5px;
+}
+.fifth_phase_control{
+    width: 80px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.hide,.end{
+    font-size: 15px;
+    letter-spacing: 0px;
+    width: 100%;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: translateX(-10px);
+}
+.hide:hover,.end:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.sixth_phase{
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: var(--sixth_phase-display);
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    letter-spacing: 5px;
+}
+.mode_name_3{
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding-left: 5px;
+    margin: 0 10px 0 5px;
+}
+.time{
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding-left: 5px;
+    margin-left: 5px;
+}

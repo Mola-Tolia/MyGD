@@ -1,0 +1,112 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+}
+.main{
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    width: calc(100vw - 1px);
+    height: calc(100vh - 1px);
+    background-color: rgba(230, 230, 230, 0.7);
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: all .3s;
+    border: 2px solid #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.title{
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    user-select: none;
+}
+.close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.control{
+    width: 300px;
+    height: 180px;
+}
+input[type="radio"]{
+    display: none;
+}
+#login:checked ~ .login{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+#register:checked ~ .register{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+label{
+    display: block;
+    width: 50%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 20px;
+    float: left;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+    user-select: none;
+}
+.input{
+    width: 100%;
+    height: calc(100% - 40px);
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 5px 5px;
+}
+input[type="text"],
+input[type="password"]{
+    width: 180px;
+    height: 30px;
+    outline: none;
+    border: none;
+    padding: 0 5px;
+    text-align: center;
+    background-color: #00000000;
+    font-size: 18px;
+    border-bottom: 2px solid #000000;
+}
+input[type="text"]:last-of-type,
+input[type="password"]{
+    margin-top: 20px;
+}
+.submit{
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    transform: translate(-50%);
+    background-color: #0000003f;
+    width: 50px;
+    height: 25px;
+    border-radius: 5px;
+    line-height: 25px;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+}
+.submit:hover{
+    background-color: #00000049;
+}

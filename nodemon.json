@@ -1,0 +1,14 @@
+{
+    "ignore":[
+        "node_modules",
+        "dist",
+        "save_files"
+    ],
+    "colours":true,
+    "verbose":true,
+    "restartable":"rs",
+    "watch":[
+        "*.*"
+    ],
+    "ext":"html,js,css"
+}
