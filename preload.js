@@ -88,5 +88,8 @@ contextBridge.exposeInMainWorld('pre_api',{
     },
     downLoadRemoteSyncFiles(files){
         ipcRenderer.send('downLoadRemoteSyncFiles',files)
+    },
+    test(){
+        return ipcRenderer.invoke('test')
     }
 })

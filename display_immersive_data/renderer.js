@@ -134,7 +134,7 @@ function calLG(arr,color){
         let end_p = Math.floor((((t.end_time + e_hours) % day) / day) * 10000) / 100
         if(end_p == 0) end_p = 100
         // if(start_p == end_p) end_p = end_p + 0.01
-        if(end_p - start_p < 0.05) end_p = start_p + 0.05
+        if(end_p - start_p < 0.05) end_p = start_p + 0.1
         color_arr.push(`${bg} ${start_p}%`)
         color_arr.push(`${color} ${start_p}%`)
         color_arr.push(`${color} ${end_p}%`)

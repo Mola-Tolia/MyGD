@@ -2,7 +2,8 @@
     "ignore":[
         "node_modules",
         "dist",
-        "save_files"
+        "save_files",
+        "resources"
     ],
     "colours":true,
     "verbose":true,

@@ -49,7 +49,7 @@ function backrecept(mainWindow,WSW,WSH,uploadImages,uploadOrdersRecord,getOrders
                     shortcuts_targetUrl = target
                 }
 
-                let file_info = await app.getFileIcon(isShortcut ? shortcuts_targetUrl : path.resolve(__dirname,file.path)).then(icon =>{
+                let file_info = await app.getFileIcon(isShortcut ? shortcuts_targetUrl : path.resolve(app.getAppPath(),file.path)).then(icon =>{
                     return {icon:icon.toDataURL(),file_id:new Date().getTime() + Math.floor(Math.random() * 10000),name:file.name,isDir:fs.statSync(file.path).isDirectory()}
                 })
                 recordFileInfoIntoJson(file_info,file.mark)
@@ -323,6 +323,25 @@ function backrecept(mainWindow,WSW,WSH,uploadImages,uploadOrdersRecord,getOrders
     ipcMain.on('downLoadRemoteSyncFiles',async (event,files) => {
         downloadFiles(files,USERNAME)
     })
+    ipcMain.handle('test',() => {
+        // fs.writeFileSync(path.resolve(wallpaper_basic_path,'current_image.json'),JSON.stringify([1,2,3],null,4),'utf8')
+        fs.writeFile(path.resolve(wallpaper_basic_path,'current_image.json'),JSON.stringify([],null,4),'utf8',(err,status) => {
+            if(err){
+                dialog.showMessageBox({
+                    title:'提示',
+                    type:'error',
+                    message:'err'
+                })
+            }else{
+                // dialog.showMessageBox({
+                //     title:'提示',
+                //     type:'info',
+                //     message:'success'
+                // })
+            }
+        })
+        // return JSON.parse(fs.readFileSync(path.resolve(wallpaper_basic_path,'current_image.json'), 'utf8'))
+    })
 }
 
 function cal4(v){
@@ -362,16 +381,16 @@ function moveFile(data,move_type){
     switch(move_type){
         case 'IN':
             if(data.isDir){
-                fs_extra.moveSync(path.resolve(os.homedir(),'Desktop',data.name),path.resolve(file_basic_path,`card_files`,data.name))
+                fs_extra.moveSync(path.resolve(app.getPath('home'),'Desktop',data.name),path.resolve(file_basic_path,`card_files`,data.name))
             }else{
-                fs.renameSync(path.resolve(os.homedir(),'Desktop',data.name),path.resolve(file_basic_path,`card_files`,data.name))
+                fs.renameSync(path.resolve(app.getPath('home'),'Desktop',data.name),path.resolve(file_basic_path,`card_files`,data.name))
             }
             break
         case 'OUT':
             if(data.isDir){
-                fs_extra.moveSync(path.resolve(file_basic_path,`card_files`,data.name),path.resolve(os.homedir(),'Desktop',data.name))
+                fs_extra.moveSync(path.resolve(file_basic_path,`card_files`,data.name),path.resolve(app.getPath('home'),'Desktop',data.name))
             }else{
-                fs.renameSync(path.resolve(file_basic_path,`card_files`,data.name),path.resolve(os.homedir(),'Desktop',data.name))
+                fs.renameSync(path.resolve(file_basic_path,`card_files`,data.name),path.resolve(app.getPath('home'),'Desktop',data.name))
             }
     }
 }
@@ -396,10 +415,10 @@ function moveFileInfo(origin_mark,target_mark,file_id){
 
 function divideFileRoughly(jsons){
     return new Promise((resolve,reject) => {
-        fs.readdir(path.resolve(os.homedir(),'Desktop'),(err,files) => {
+        fs.readdir(path.resolve(app.getPath('home'),'Desktop'),(err,files) => {
             let files_info = []
-            files.filter(file => !/^~\$/.test(file) && file !== 'desktop.ini' && !path.resolve(__dirname).includes(path.resolve(os.homedir(),'Desktop',file))).map(async (fileName,index,arr) => {
-                let file_info = await transferFile(path.resolve(path.resolve(os.homedir(),'Desktop'),fileName),fileName,jsons.map(str => str.split('.')[0].split('_')[1]))
+            files.filter(file => !/^~\$/.test(file) && file !== 'desktop.ini' && !path.resolve(app.getAppPath()).includes(path.resolve(app.getPath('home'),'Desktop',file))).map(async (fileName,index,arr) => {
+                let file_info = await transferFile(path.resolve(path.resolve(app.getPath('home'),'Desktop'),fileName),fileName,jsons.map(str => str.split('.')[0].split('_')[1]))
                 files_info.push(file_info)
                 if(arr.length == files_info.length){
                     resolve(files_info)
@@ -468,12 +487,12 @@ function adjustRoughly(jsons){
 
 function divideFileInDetail(){
     return new Promise((resolve,reject) => {
-        fs.readdir(path.resolve(os.homedir(),'Desktop'),(err,files) => {
+        fs.readdir(path.resolve(app.getPath('home'),'Desktop'),(err,files) => {
             let files_info = []
-            files = files.filter(file => !/^~\$/.test(file) && file !== 'desktop.ini' && !path.resolve(__dirname).includes(path.resolve(os.homedir(),'Desktop',file)))
+            files = files.filter(file => !/^~\$/.test(file) && file !== 'desktop.ini' && !path.resolve(app.getAppPath()).includes(path.resolve(app.getPath('home'),'Desktop',file)))
             if(files.length === 0) resolve()
             files.map(async (fileName,index,arr) => {
-                let file_info = await transferFile(path.resolve(path.resolve(os.homedir(),'Desktop'),fileName),fileName,[0,0])
+                let file_info = await transferFile(path.resolve(path.resolve(app.getPath('home'),'Desktop'),fileName),fileName,[0,0])
                 files_info.push(file_info)
                 if(arr.length == files_info.length){
                     resolve()
@@ -486,7 +505,7 @@ function divideFileInDetail(){
             fs.readdir(path.resolve(file_basic_path,'card_files'),(err,files) => {
                 if(err) return
                 let files_info = []
-                files = files.filter(file => !/^~\$/.test(file) && file !== 'desktop.ini' && !path.resolve(__dirname).includes(path.resolve(os.homedir(),'Desktop',file)))
+                files = files.filter(file => !/^~\$/.test(file) && file !== 'desktop.ini' && !path.resolve(app.getAppPath()).includes(path.resolve(app.getPath('home'),'Desktop',file)))
                 files.forEach(async (file,index) => {
                     files_info.push(await adjustFileToCard(file))
                     if(files.length == files_info.length){
@@ -677,7 +696,7 @@ function getHashId(file_path){
 }
 
 function getAllFiles(){
-    let desk_files = fs.readdirSync(path.resolve(os.homedir(),'Desktop')).filter(file => fs.statSync(path.resolve(os.homedir(),'Desktop',file)).isFile())
+    let desk_files = fs.readdirSync(path.resolve(app.getPath('home'),'Desktop')).filter(file => fs.statSync(path.resolve(app.getPath('home'),'Desktop',file)).isFile())
     desk_files = desk_files.filter(file => !/^~\$/.test(file) && file !== 'desktop.ini')
     let area_files = []
     fs.readdirSync(file_basic_path).filter(fileName => /.json$/.test(fileName)).forEach(json => {
@@ -698,7 +717,7 @@ function getAllFiles(){
             return
         }
         desk_files.forEach(async file => {
-            const file_path = path.resolve(os.homedir(),'Desktop',file)
+            const file_path = path.resolve(app.getPath('home'),'Desktop',file)
             let { fileTypeFromBuffer } = await import('file-type')
             let mime = ''
             const typeInfor = await fileTypeFromBuffer(fs.readFileSync(file_path))

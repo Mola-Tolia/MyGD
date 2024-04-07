@@ -13,7 +13,7 @@ function watchFiles(getHashId){
         }
     })
     watchers = []
-    const orders = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./save_files/order/orders.json'), 'utf8'))
+    const orders = JSON.parse(fs.readFileSync(path.resolve(order_basic_path,'orders.json'), 'utf8'))
     orders.forEach(order => {
         const order_id = order.order_id
         order.files.forEach(file => {
@@ -31,11 +31,11 @@ function watchFiles(getHashId){
                     return
                 }
                 timer = setTimeout(() => {
-                    const cur_orders = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./save_files/order/orders.json'), 'utf8'))
+                    const cur_orders = JSON.parse(fs.readFileSync(path.resolve(order_basic_path,'orders.json'), 'utf8'))
                     const cur_file = cur_orders.find(order => order.order_id == order_id).files.find(file => file.file_id == file_id)
                     const old_hash = cur_file.hash_name
                     cur_file.hash_name = getHashId(cur_file.file_path) + '.' + cur_file.file_path.split('.')[cur_file.file_path.split('.').length - 1]
-                    fs.writeFileSync(path.resolve(__dirname,'./save_files/order/orders.json'),JSON.stringify(cur_orders,null,4),'utf8')
+                    fs.writeFileSync(path.resolve(order_basic_path,'orders.json'),JSON.stringify(cur_orders,null,4),'utf8')
                     fetch(`${url}updateFileHashName`,{
                         method: 'POST',
                         body: JSON.stringify({

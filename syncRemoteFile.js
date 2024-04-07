@@ -1,9 +1,10 @@
+const { app } = require('electron')
 const fs = require('fs')
 const path = require('path')
 const os = require('os')
 const axios = require('axios')
 const { error } = require('console')
-const { url, headers, order_basic_path } = require('./globalVar')
+const { url, headers, order_basic_path, wallpaper_basic_path } = require('./globalVar')
 
 
 async function syncWallpaper(user){
@@ -23,7 +24,7 @@ function download(image){
             responseType: 'stream', // 指示axios返回流
         }).then(response => {
             // 创建一个可写流来写入文件
-            const writer = fs.createWriteStream(path.resolve(__dirname,`./save_files/wallpaper/${image}`))
+            const writer = fs.createWriteStream(path.resolve(wallpaper_basic_path,image))
             // 将响应流管道到文件可写流中
             response.data.pipe(writer)
             // 处理写入完成
@@ -46,7 +47,7 @@ function getOrders(user,ISUPLOADINGORDERSRECORD){
     return new Promise(resolve => {
         fetch(`${url}getOrders?username=${user}`, { method: 'POST',headers}).then(res => res.text()).then(json => {
             console.log('getOrders')
-            fs.writeFileSync(path.resolve(__dirname,'./save_files/order/orders.json'),json,'utf8')
+            fs.writeFileSync(path.resolve(order_basic_path,'orders.json'),json,'utf8')
             console.log('read over')
             resolve()
         }).catch(err => {
@@ -106,7 +107,7 @@ function downloadFiles(files,user){
             responseType: 'stream', // 指示axios返回流
         }).then(response => {
             // 创建一个可写流来写入文件
-            const writer = fs.createWriteStream(path.resolve(os.homedir(),'Desktop',file))
+            const writer = fs.createWriteStream(path.resolve(app.getPath('home'),'Desktop',file))
             // 将响应流管道到文件可写流中
             response.data.pipe(writer)
             // 处理写入完成
@@ -117,7 +118,7 @@ function downloadFiles(files,user){
         }).then(() => {
             console.log('File has been downloaded')
         },error => {
-            console.error('Error download file')
+            console.error('Error download file',error)
         })
     })
 }

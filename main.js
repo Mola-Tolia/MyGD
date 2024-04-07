@@ -12,11 +12,12 @@ const { displayDataBackrecept } = require('./display_immersive_data/backrecept')
 const { syncWallpaper, getOrders, getOrderFiles } = require('./syncRemoteFile')
 const { watchFiles,watchSyncFiles } = require('./watchfiles')
 const { processMenu } = require('./processMenu')
-const { url, headers, order_basic_path, sync_basic_path, immersive_path, process_icon } = require('./globalVar')
+const { url, headers, order_basic_path, sync_basic_path, immersive_path, process_icon, wallpaper_basic_path } = require('./globalVar')
 
 let WSW,WSH,USERNAME,ISUPLOADINGORDERSRECORD = false
 
 app.whenReady().then(() => {
+    // return
     loginWindow().then(async (username) => {
         USERNAME = username
         const primaryDisplay = screen.getPrimaryDisplay()
@@ -48,7 +49,7 @@ const createWindow = () => {
         transparent:true,
         focusable:false,//设置窗口不可聚焦，使其不会出现在其他窗口的上一层
         webPreferences:{
-            preload:path.resolve(__dirname,`./preload.js`)
+            preload:path.resolve(app.getAppPath(),`./preload.js`)
         },
         resizable:false,
         width:WSW / 2,
@@ -59,7 +60,7 @@ const createWindow = () => {
     })
 
     // mainWindow.webContents.toggleDevTools()//自动打开开发者工具
-    mainWindow.loadFile(path.resolve(__dirname,`./index.html`))
+    mainWindow.loadFile(path.resolve(app.getAppPath(),`./index.html`))
 
     backrecept(
         mainWindow,
@@ -82,7 +83,7 @@ const remindWindow = () => {
         frame:false,
         transparent:true,
         webPreferences:{
-            preload:path.resolve(__dirname,`./order_remind_window/preload.js`)
+            preload:path.resolve(app.getAppPath(),`./order_remind_window/preload.js`)
         },
         resizable:false,
         width:width,
@@ -92,7 +93,7 @@ const remindWindow = () => {
         skipTaskbar: true
     })
     // mainWindow.webContents.toggleDevTools()//自动打开开发者工具
-    mainWindow.loadFile(path.resolve(__dirname,`./order_remind_window/index.html`))
+    mainWindow.loadFile(path.resolve(app.getAppPath(),`./order_remind_window/index.html`))
 
     remindBackrecept(mainWindow,WSW,WSH)
 
@@ -107,7 +108,7 @@ function loginWindow(){
             frame:false,
             transparent:true,
             webPreferences:{
-                preload:path.resolve(__dirname,`./login_window/preload.js`)
+                preload:path.resolve(app.getAppPath(),`./login_window/preload.js`)
             },
             resizable:false,
             width:width,
@@ -115,9 +116,10 @@ function loginWindow(){
             center:true,
             skipTaskbar: true
         })
-        mainWindow.loadFile(path.resolve(__dirname,`./login_window/index.html`))
+        mainWindow.loadFile(path.resolve(app.getAppPath(),`./login_window/index.html`))
         const fetch = await import('node-fetch').then((module) => module.default)
         ipcMain.on('login',(event,{username,password}) => {
+            // dialog.showMessageBox({title:'提示',type:'none',message:'点击了登录'})
             fetch(`${url}login`,{method:'POST',body:JSON.stringify({username,password}),headers})
             .then(res => res.json())
             .then(({status,message}) => {
@@ -126,15 +128,20 @@ function loginWindow(){
                     mainWindow.close()
                     resolve(username)
                 } else dialog.showMessageBox({title:'提示',type:'warning',message})
+            }).catch(err => {
+                dialog.showMessageBox({title:'提示',type:'error',message:err})
             })
         })
         ipcMain.on('register',(event,{username,password}) => {
+            // dialog.showMessageBox({title:'提示',type:'none',message:'点击了注册'})
             fetch(`${url}register`,{method:'POST',body:JSON.stringify({username,password}),headers})
             .then(res => res.json())
             .then(({status,message}) => {
                 if(status){
                     dialog.showMessageBox({title:'提示',type:'none',message})
                 } else dialog.showMessageBox({title:'提示',type:'warning',message})
+            }).catch(err => {
+                dialog.showMessageBox({title:'提示',type:'error',message:err})
             })
         })
         ipcMain.on('quit',() => {
@@ -144,8 +151,8 @@ function loginWindow(){
 }
 
 function uploadImages(){
-    let images_name = fs.readdirSync(path.resolve(__dirname,'./save_files/wallpaper')).filter(image => image != 'current_image.json')
-    let images_path = images_name.map(image => path.resolve(__dirname,'./save_files/wallpaper',image))
+    let images_name = fs.readdirSync(wallpaper_basic_path).filter(image => image != 'current_image.json')
+    let images_path = images_name.map(image => path.resolve(wallpaper_basic_path,image))
     const formData = new FormData()
     images_path.forEach((image_path,index) => {
         formData.append('file', fs.createReadStream(image_path))
@@ -182,7 +189,7 @@ async function uploadOrdersRecord(username){
     ISUPLOADINGORDERSRECORD = true
     return new Promise(async resolve => {
         const obj = {
-            json:JSON.parse(fs.readFileSync(path.resolve(__dirname,'./save_files/order/orders.json'),'utf8')),
+            json:JSON.parse(fs.readFileSync(path.resolve(order_basic_path,'orders.json'),'utf8')),
             user:username
         }
         fetch(`${url}recordOrders`,{
@@ -239,7 +246,7 @@ function immersiveWindow(){
         frame:false,
         transparent:true,
         webPreferences:{
-            preload:path.resolve(__dirname,`./immersive_mode_window/preload.js`)
+            preload:path.resolve(app.getAppPath(),`./immersive_mode_window/preload.js`)
         },
         resizable:false,
         width:width,
@@ -249,7 +256,7 @@ function immersiveWindow(){
         alwaysOnTop:true
     })
     // mainWindow.webContents.toggleDevTools()
-    mainWindow.loadFile(path.resolve(__dirname,`./immersive_mode_window/index.html`))
+    mainWindow.loadFile(path.resolve(app.getAppPath(),`./immersive_mode_window/index.html`))
 
     globalShortcut.register("CTRL+m",() => {
         if(mainWindow.isVisible()){
@@ -315,7 +322,7 @@ function displayDataWindow(){
         frame:false,
         transparent:true,
         webPreferences:{
-            preload:path.resolve(__dirname,`./display_immersive_data/preload.js`)
+            preload:path.resolve(app.getAppPath(),`./display_immersive_data/preload.js`)
         },
         resizable:false,
         width:width,
@@ -325,7 +332,7 @@ function displayDataWindow(){
         alwaysOnTop:true
     })
     // mainWindow.webContents.toggleDevTools()
-    mainWindow.loadFile(path.resolve(__dirname,`./display_immersive_data/index.html`))
+    mainWindow.loadFile(path.resolve(app.getAppPath(),`./display_immersive_data/index.html`))
 
     globalShortcut.register("CTRL+l",() => {
         if(mainWindow.isVisible()){

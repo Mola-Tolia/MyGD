@@ -1,4 +1,4 @@
-const {  Menu } = require('electron')
+const { app, Menu } = require('electron')
 
 const processMenu =  Menu.buildFromTemplate([
     { label: '退出登录', click: () => { app.relaunch();app.quit() } },

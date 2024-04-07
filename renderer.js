@@ -497,6 +497,11 @@ window.addEventListener('DOMContentLoaded',async () => {
         document.querySelector('.downSync_box_cancel').click()
     })
 
+    document.addEventListener('click',() => {
+        window.pre_api.test().then(res => {
+            // alert(`结果***${Array.isArray(res)}***${res.length}***${typeof res}***${123}`)
+        })
+    })
     // document.querySelector('.retract').click()
 })
 

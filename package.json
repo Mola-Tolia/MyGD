@@ -1,11 +1,12 @@
 {
-  "name": "dg2",
+  "name": "deskassistant",
   "version": "1.0.0",
-  "description": "",
+  "description": "my second electron project",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec electron ."
+    "dev": "nodemon --exec electron .",
+    "dist": "electron-builder --windows --x64"
   },
   "keywords": [],
   "author": "",
@@ -13,16 +14,38 @@
   "dependencies": {
     "axios": "^1.6.8",
     "crypto": "^1.0.1",
-    "electron": "^26.1.0",
     "file-type": "^19.0.0",
     "form-data": "^4.0.0",
     "fs-extra": "^11.2.0",
     "node-fetch": "^3.3.2",
-    "nodemon": "^3.1.0",
     "wallpaper": "^7.2.1",
     "win-wallpaper": "^1.0.0"
   },
+  "build": {
+    "appId": "wsy.electron.gd2",
+    "productName": "桌面助手",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "nsis": {
+      "oneClick": false,
+      "language": "2052",
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "installerIcon":"resources/images/icon.ico",
+      "installerHeaderIcon":"resources/images/icon.ico"
+    },
+    "win": {
+      "icon": "resources/images/icon.ico"
+    },
+    "files": [
+      "**/*"
+    ]
+  },
   "devDependencies": {
-    "@electron-forge/cli": "^7.3.1"
+    "electron": "^26.1.0",
+    "nodemon": "^3.1.0"
   }
 }
